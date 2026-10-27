@@ -181,15 +181,15 @@ SET_FITUR = {"A: riwayat saja": FITUR_A, "B: + curah hujan": FITUR_B, "C: + gamb
 
 
 def buat_rf(**kw):
-    p = dict(n_estimators=500, random_state=SEED, class_weight="balanced", n_jobs=-1)
+    p = dict(n_estimators=200, random_state=SEED, class_weight="balanced", n_jobs=-1)
     p.update(kw)
     return RandomForestClassifier(**p)
 
 
 def tune(Xtr, ytr, grup):
     grid = {"max_depth": [3, 6, None], "min_samples_leaf": [1, 3, 5]}
-    gs = GridSearchCV(buat_rf(n_estimators=300), grid, cv=GroupKFold(n_splits=5),
-                      scoring="f1_macro", n_jobs=-1)
+    gs = GridSearchCV(buat_rf(n_estimators=100), grid, cv=GroupKFold(n_splits=5),
+                      scoring="f1_macro", n_jobs=1)
     gs.fit(Xtr, ytr, groups=grup)
     return gs.best_params_, gs.best_score_
 
@@ -283,7 +283,7 @@ def main():
 
     # ---- feature importance
     imp = pd.DataFrame({"fitur": fitur, "gini": rf.feature_importances_})
-    pi = permutation_importance(rf, test[fitur], yte, n_repeats=30, random_state=SEED,
+    pi = permutation_importance(rf, test[fitur], yte, n_repeats=10, random_state=SEED,
                                 scoring="f1_macro", n_jobs=-1)
     imp["permutasi"] = pi.importances_mean
     imp["permutasi_std"] = pi.importances_std
