@@ -46,7 +46,7 @@ h1 {font-weight: 700; letter-spacing: -0.5px;}
 [data-testid="stRadio"] label {padding: .45rem 1.1rem; border-radius: 999px; cursor: pointer;
     background: rgba(15,118,110,.12); border: 1px solid rgba(15,118,110,.35);}
 [data-testid="stRadio"] label > div:first-child {display: none;}
-[data-testid="stRadio"] label:has(input:checked) {background: linear-gradient(120deg,#14532d,#0f766e); border-color: transparent;}
+[data-testid="stRadio"] label:has(input:checked) {background: linear-gradient(120deg,#b91c1c,#ef4444); border-color: transparent;}
 [data-testid="stRadio"] label:has(input:checked) * {color: #fff !important; font-weight: 700;}
 .hero {border-radius: 18px; padding: 1.6rem 1.8rem; margin-bottom: 1.2rem; color: #fff;
        background: linear-gradient(120deg, #14532d 0%, #0f766e 55%, #2b9a6b 100%);
@@ -287,7 +287,7 @@ def halaman_tentang():
 """)
 
 
-# -------------------------------------------------------------------- navigasi
+
 HALAMAN = {
     "Prediksi": halaman_prediksi,
     "Performa Model": halaman_performa,
