@@ -1,4 +1,12 @@
-import startup
+import importlib.util as _ilu, os as _os, sys as _sys
+# cari startup.py di root repo (satu level di atas app/)
+_root = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))
+if _root not in _sys.path:
+    _sys.path.insert(0, _root)
+_sp = _os.path.join(_root, "startup.py")
+if _os.path.exists(_sp):
+    _spec = _ilu.spec_from_file_location("startup", _sp)
+    _mod  = _ilu.module_from_spec(_spec); _spec.loader.exec_module(_mod)
 
 import json
 import os
@@ -51,6 +59,9 @@ h3 {border-left: 5px solid #0f766e; padding-left: .7rem !important;}
     unsafe_allow_html=True,
 )
 
+
+
+# --------------------------------------------------------------------- muat data
 @st.cache_resource
 def muat_model():
     return joblib.load(os.path.join(MODEL_DIR, "model_rf.joblib"))
@@ -100,6 +111,7 @@ model, meta, profil, panel = muat_model(), muat_meta(), muat_profil(), muat_pane
 KELAS, AMBANG = meta["kelas"], meta["ambang_ha"]
 
 
+# ------------------------------------------------------------------ halaman
 def halaman_prediksi():
     hero("Prediksi Kelas Kerawanan Karhutla",
          "Perkiraan kelas kerawanan sebuah provinsi dalam satu tahun, berdasarkan riwayat luas karhutla dan curah hujan musim kemarau (Juli-Oktober) yang Anda masukkan.")
@@ -274,6 +286,8 @@ def halaman_tentang():
 - Label berupa luas terbakar per provinsi, bukan peta kerawanan spasial.
 """)
 
+
+# -------------------------------------------------------------------- navigasi
 HALAMAN = {
     "Prediksi": halaman_prediksi,
     "Performa Model": halaman_performa,
