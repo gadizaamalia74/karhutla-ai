@@ -1,24 +1,21 @@
-import os, sys, subprocess
+"""
+Dijalankan dari app/app.py saat startup di Streamlit Cloud.
+Import pipeline langsung supaya error muncul di log Streamlit.
+"""
+import os, sys
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 MODEL = os.path.join(ROOT, "model", "model_rf.joblib")
 
 if not os.path.exists(MODEL):
-    src = os.path.join(ROOT, "src", "pipeline.py")
-    env = os.environ.copy()
-    env["KARHUTLA_RAW"] = os.path.join(ROOT, "data", "raw")
-    result = subprocess.run(
-        [sys.executable, src],
-        env=env,
-        capture_output=True,
-        text=True,
-    )
-    if result.returncode != 0:
-        print("=== STDOUT pipeline ===")
-        print(result.stdout[-3000:])
-        print("=== STDERR pipeline ===")
-        print(result.stderr[-3000:])
-        raise RuntimeError("Pipeline gagal. Lihat log di atas.")
-    else:
-        print("Pipeline selesai.")
-        print(result.stdout[-1000:])
+    # tambah ROOT dan src ke path supaya import pipeline bisa jalan
+    for p in [ROOT, os.path.join(ROOT, "src")]:
+        if p not in sys.path:
+            sys.path.insert(0, p)
+    
+    # set env variable RAW supaya pipeline tahu letak data
+    os.environ["KARHUTLA_RAW"] = os.path.join(ROOT, "data", "raw")
+    
+    # import dan jalankan langsung (error langsung tercetak di log)
+    import pipeline
+    pipeline.main()
