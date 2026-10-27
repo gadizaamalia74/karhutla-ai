@@ -1,3 +1,9 @@
+"""
+Aplikasi kerawanan karhutla per provinsi (Random Forest).
+
+Jalankan dari folder KarhutlaAI (setelah menjalankan src/pipeline.py):
+    streamlit run app/app.py
+"""
 import importlib.util as _ilu, os as _os, sys as _sys
 # cari startup.py di root repo (satu level di atas app/)
 _root = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))
@@ -24,7 +30,7 @@ PANEL = os.path.join(BASE, "data", "processed", "dataset_panel.csv")
 
 HEX = {"rendah": "#2ea043", "sedang": "#f0883e", "tinggi": "#e5534b"}
 
-st.set_page_config(page_title="Kerawanan Karhutla", layout="wide", initial_sidebar_state="collapsed")
+st.set_page_config(page_title="Kerawanan Karhutla", page_icon="🌲", layout="wide", initial_sidebar_state="collapsed")
 
 st.markdown(
     """
@@ -46,8 +52,10 @@ h1 {font-weight: 700; letter-spacing: -0.5px;}
 [data-testid="stRadio"] label {padding: .45rem 1.1rem; border-radius: 999px; cursor: pointer;
     background: rgba(15,118,110,.12); border: 1px solid rgba(15,118,110,.35);}
 [data-testid="stRadio"] label > div:first-child {display: none;}
-[data-testid="stRadio"] label:has(input:checked) {background: linear-gradient(120deg,#b91c1c,#ef4444); border-color: transparent;}
-[data-testid="stRadio"] label:has(input:checked) * {color: #fff !important; font-weight: 700;}
+[data-testid="stRadio"] label:has(input:checked) {background: rgba(15,118,110,.15); border-color: #0f766e;}
+[data-testid="stRadio"] label:has(input:checked) * {color: inherit !important; font-weight: 700;}
+[data-testid="stRadio"] label:has(input:checked) span[data-testid="stMarkdownContainer"] {color: #0f766e !important;}
+[data-testid="stRadio"] label:has(input:checked) div[role="radio"] {background: #e5534b !important; border-color: #e5534b !important;}
 .hero {border-radius: 18px; padding: 1.6rem 1.8rem; margin-bottom: 1.2rem; color: #fff;
        background: linear-gradient(120deg, #14532d 0%, #0f766e 55%, #2b9a6b 100%);
        box-shadow: 0 6px 20px rgba(15,118,110,.25);}
@@ -287,7 +295,7 @@ def halaman_tentang():
 """)
 
 
-
+# -------------------------------------------------------------------- navigasi
 HALAMAN = {
     "Prediksi": halaman_prediksi,
     "Performa Model": halaman_performa,
