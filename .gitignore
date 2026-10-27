@@ -1,0 +1,25 @@
+# cache curah hujan (bisa ditarik ulang)
+raw_power/
+curah_hujan_bulanan.csv
+tarik_curah_hujan.py
+
+# hasil pipeline (dibuat ulang di server)
+hasil/
+model/
+data/processed/
+
+# file dataset yang tidak dipakai model
+data/raw/emisiCO2.xlsx
+data/raw/sebaran-hotspot.xlsx
+
+# VS Code
+.vscode/
+
+# Flutter (nyasar)
+pubspec.yaml
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
